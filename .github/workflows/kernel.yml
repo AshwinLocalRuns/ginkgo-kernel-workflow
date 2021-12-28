@@ -15,7 +15,7 @@ jobs:
         
       - name: Checkout Repo
         if: ${{ always() }}
-        run: git clone git@github.com:PixelOS-Automated-Builds/ginkgo-kernel-workflow.git . 
+        run: git clone git@github.com:PixelOS-Releases/ginkgo-kernel-workflow.git . 
           
       - name: Clone Kernel
         if: ${{ always() }}
