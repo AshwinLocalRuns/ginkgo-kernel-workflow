@@ -18,18 +18,17 @@ jobs:
     # The type of runner that the job will run on
     runs-on: self-hosted
     steps:
-      # Runs a set of commands using the runners shell
+
+      - name: Remove Work Dir
+        run: rm -rf $GITHUB_WORKSPACE
+        
       - name: Checkout Repo
         if: ${{ always() }}
-        uses: actions/checkout@v2
+        run: git clone git@github.com:PixelOS-Automated-Builds/ginkgo-kernel-workflow.git . 
           
-      - name: Checkout Repo
+      - name: Clone Kernel
         if: ${{ always() }}
-        uses: actions/checkout@v2
-        with:
-          repository: geek0609/kernel_xiaomi_ginkgo
-          path: kernel
-          fetch-depth: 1
+        run: git clone git@github.com:geek0609/kernel_xiaomi_ginkgo.git --depth=1 -b 11.0 kernel 
           
       - name: Build
         if: ${{ always() }}
@@ -42,4 +41,7 @@ jobs:
       - name: Post a Github Release
         run: hub release create -a *.zip -m 'Kernel Build' $(date +%s)
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_KEYS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          
+      - name: Remove Work Dir
+        run: rm -rf $GITHUB_WORKSPACE
