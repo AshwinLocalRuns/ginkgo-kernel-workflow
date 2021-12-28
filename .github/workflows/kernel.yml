@@ -38,15 +38,8 @@ jobs:
       - name: copy zip out
         if: ${{ always() }}
         run: cp kernel/*.zip . 
-        
-      - name: remove kernel folder
-        if: ${{ always() }}
-        run: rm -rf kernel
           
       - name: Post a Github Release
         run: hub release create -a *.zip -m 'Kernel Build' $(date +%s)
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_KEYS }}
-      
-      - name: remove workspce
-        run: rm -rf $GITHUB_WORKSPACE
