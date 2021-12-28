@@ -20,7 +20,7 @@ jobs:
     steps:
 
       - name: Remove Work Dir
-        run: rm -rf $GITHUB_WORKSPACE
+        run: rm -rf *
         
       - name: Checkout Repo
         if: ${{ always() }}
